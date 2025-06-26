@@ -1,0 +1,13 @@
+{
+  "itemGroup.manyshields": "Example Mod Tab",
+  "block.manyshields.example_block": "Example Block",
+  "item.manyshields.example_item": "Example Item",
+
+  "manyshields.configuration.title": "Many Shields Configs",
+  "manyshields.configuration.section.manyshields.common.toml": "Many Shields Configs",
+  "manyshields.configuration.section.manyshields.common.toml.title": "Many Shields Configs",
+  "manyshields.configuration.items": "Item List",
+  "manyshields.configuration.logDirtBlock": "Log Dirt Block",
+  "manyshields.configuration.magicNumberIntroduction": "Magic Number Text",
+  "manyshields.configuration.magicNumber": "Magic Number"
+}

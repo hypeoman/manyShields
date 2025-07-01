@@ -40,6 +40,7 @@ public class ShieldRenderer extends BlockEntityWithoutLevelRenderer {
 
     public ShieldRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, EntityModelSet entityModelSet) {
         super(blockEntityRenderDispatcher, entityModelSet);
+        this.entityModelSet = entityModelSet;
     }
 
     @SubscribeEvent

@@ -1,8 +1,16 @@
 package com.hyperoman.manyshields;
 
+import com.hyperoman.manyshields.util.ShieldRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.server.packs.resources.ReloadableResourceManager;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
@@ -14,5 +22,15 @@ public class ManyShieldsClient {
         // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
         // Do not forget to add translations for your config options to the en_us.json file.
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+    }
+
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        // получаем «сырую» ссылку
+        ResourceManager rm = Minecraft.getInstance().getResourceManager();
+        // кастим к ReloadableResourceManager
+        ReloadableResourceManager reloadable = (ReloadableResourceManager) rm;
+        // регистрируем наш рендерер-слушатель
+        reloadable.registerReloadListener(ShieldRenderer.instance);
     }
 }

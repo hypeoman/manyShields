@@ -1,9 +1,11 @@
 package com.hyperoman.manyshields.util;
 
 import com.hyperoman.manyshields.ManyShields;
+import com.hyperoman.manyshields.item.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.model.ShieldModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -32,78 +34,48 @@ import java.util.function.Predicate;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = ManyShields.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ShieldRenderer extends BlockEntityWithoutLevelRenderer {
-    private ShieldModel shieldModel;
-    private ShieldModel shieldPatternModel;
-    private EntityModelSet entityModelSet;
 
     public static ShieldRenderer instance;
+    private ShieldModel shieldModel;
 
     public ShieldRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, EntityModelSet entityModelSet) {
         super(blockEntityRenderDispatcher, entityModelSet);
-        this.entityModelSet = entityModelSet;
     }
 
     @SubscribeEvent
-    public static void onRegisterReloadListener(RegisterClientReloadListenersEvent event){
-        instance = new ShieldRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+    public static void onRegisterReloadListener(RegisterClientReloadListenersEvent event) {
+        instance = new ShieldRenderer(Minecraft.getInstance().getBlockEntityRenderDispatcher(),
+                Minecraft.getInstance().getEntityModels());
         event.registerReloadListener(instance);
     }
 
     @Override
-    public void onResourceManagerReload(net.minecraft.server.packs.resources.ResourceManager resourceManager) {
-        // берём те же слои, что ваниль
-        this.shieldModel = new ShieldModel(this.entityModelSet.bakeLayer(ModelLayers.SHIELD));
-    }
+    public void renderByItem(ItemStack stack, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, int overlay) {
+        BannerPatternLayers bannerpatternlayers = stack.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
+        DyeColor dyecolor = stack.get(DataComponents.BASE_COLOR);
+        boolean flag = !bannerpatternlayers.layers().isEmpty() || dyecolor != null;
+        poseStack.pushPose();
+        poseStack.scale(1.0F, -1.0F, -1.0F);
+        Material material = flag ? ModelBakery.SHIELD_BASE : ModelBakery.NO_PATTERN_SHIELD;
 
-    @Override
-    public void renderByItem(ItemStack stack, ItemDisplayContext transformType,
-                             PoseStack matrixStack, net.minecraft.client.renderer.MultiBufferSource buffers,
-                             int packedLight, int packedOverlay) {
-        // --- 1) Если это именно наш щит, рисуем как у ванили ---
-        if (stack.getItem() == ManyShields.WOODEN_SHIELD.get()) {
-            // достаём цвета/паттерны из DataComponents
-            var patterns = stack.getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY);
-            DyeColor base = stack.get(DataComponents.BASE_COLOR);
-            boolean hasPattern = !patterns.layers().isEmpty() || base != null;
-
-            matrixStack.pushPose();
-            matrixStack.scale(1.0F, -1.0F, -1.0F);
-
-            // выбираем нужный материал: с паттернами или без
-            Material mat = hasPattern ? ModelBakery.SHIELD_BASE : ModelBakery.NO_PATTERN_SHIELD;
-            VertexConsumer consumer = mat.sprite()
-                    .wrap(ItemRenderer.getFoilBufferDirect(
-                            buffers,
-                            this.shieldModel.renderType(mat.atlasLocation()),
-                            true,
-                            stack.hasFoil()
-                    ));
-
-            // рендерим держак
-            this.shieldModel.handle().render(matrixStack, consumer, packedLight, packedOverlay);
-
-            // рендерим сам щит: либо просто пластину, либо пластину + цветные паттерны
-            if (hasPattern) {
-                BannerRenderer.renderPatterns(
-                        matrixStack,
-                        buffers,
-                        packedLight,
-                        packedOverlay,
-                        this.shieldModel.plate(),
-                        mat,
-                        false,
-                        Objects.requireNonNullElse(base, DyeColor.WHITE),
-                        patterns,
-                        stack.hasFoil()
-                );
-            } else {
-                this.shieldModel.plate().render(matrixStack, consumer, packedLight, packedOverlay);
-            }
-            matrixStack.popPose();
-            return;
+        Item shield = stack.getItem();
+        if (shield == ModItems.WOODEN_SHIELD.get()) {
+            material = flag ? ModModelPredicateProvider.LOCATION_WOODEN_SHIELD_BASE : ModModelPredicateProvider.LOCATION_WOODEN_SHIELD_BASE_NOPATTERN;
+        } else if (shield == ModItems.GOLD_SHIELD.get()) {
+            material = flag ? ModModelPredicateProvider.LOCATION_GOLD_SHIELD_BASE : ModModelPredicateProvider.LOCATION_GOLD_SHIELD_BASE_NOPATTERN;
+        } else if (shield == ModItems.DIAMOND_SHIELD.get()) {
+            material = flag ? ModModelPredicateProvider.LOCATION_DIAMOND_SHIELD_BASE : ModModelPredicateProvider.LOCATION_DIAMOND_SHIELD_BASE_NOPATTERN;
+        } else if (shield == ModItems.NETHERITE_SHIELD.get()) {
+            material = flag ? ModModelPredicateProvider.LOCATION_NETHERITE_SHIELD_BASE : ModModelPredicateProvider.LOCATION_NETHERITE_SHIELD_BASE_NOPATTERN;
         }
 
-        // --- 2) Для всего остального — дефолтный рендер ванили ---
-        super.renderByItem(stack, transformType, matrixStack, buffers, packedLight, packedOverlay);
+        VertexConsumer $$28 = material.sprite().wrap(ItemRenderer.getFoilBufferDirect(multiBufferSource, this.shieldModel.renderType(material.atlasLocation()), true, stack.hasFoil()));
+        this.shieldModel.handle().render(poseStack, $$28, light, overlay);
+        if (flag) {
+            BannerRenderer.renderPatterns(poseStack, multiBufferSource, light, overlay, this.shieldModel.plate(), material, false, (DyeColor) Objects.requireNonNullElse(dyecolor, DyeColor.WHITE), bannerpatternlayers, stack.hasFoil());
+        } else {
+            this.shieldModel.plate().render(poseStack, $$28, light, overlay);
+        }
+        poseStack.popPose();
     }
 }

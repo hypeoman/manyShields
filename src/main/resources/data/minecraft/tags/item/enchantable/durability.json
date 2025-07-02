@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "manyshields:gold_shield",
+    "manyshields:diamond_shield",
+    "manyshields:netherite_shield"
+  ]
+}

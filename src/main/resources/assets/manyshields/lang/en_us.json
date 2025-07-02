@@ -1,13 +1,10 @@
 {
-  "itemGroup.manyshields": "Example Mod Tab",
-  "block.manyshields.example_block": "Example Block",
-  "item.manyshields.example_item": "Example Item",
+  "item.manyshields.gold_shield": "Gold Shield",
+  "item.manyshields.diamond_shield": "Diamond Shield",
+  "item.manyshields.netherite_shield": "Netherite Shield",
 
-  "manyshields.configuration.title": "Many Shields Configs",
-  "manyshields.configuration.section.manyshields.common.toml": "Many Shields Configs",
-  "manyshields.configuration.section.manyshields.common.toml.title": "Many Shields Configs",
-  "manyshields.configuration.items": "Item List",
-  "manyshields.configuration.logDirtBlock": "Log Dirt Block",
-  "manyshields.configuration.magicNumberIntroduction": "Magic Number Text",
-  "manyshields.configuration.magicNumber": "Magic Number"
+  "item.moditems.shift": "Press \"SHIFT\" for more Info",
+  "item.moditems.gold_shield": "Gold Shield. Durability is ",
+  "item.moditems.diamond_shield": "Diamond Shield. Durability is ",
+  "item.moditems.netherite_shield": "Netherite Shield. Durability is ",
 }

@@ -3,8 +3,8 @@
 	"gui_light": "front",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "morevanillashields:entity/netherite_shield_base_nopattern",
-		"particle": "morevanillashields:entity/netherite_shield_base_nopattern"
+		"0": "manyshields:entity/netherite_shield_base_nopattern",
+		"particle": "manyshields:entity/netherite_shield_base_nopattern"
 	},
 	"display": {
 		"thirdperson_righthand": {
@@ -46,9 +46,9 @@
 	"overrides": [
 		{
 			"predicate": {
-				"morevanillashields:blocking": 1
+				"manyshields:blocking": 1
 			},
-			"model": "morevanillashields:item/netherite_shield_blocking"
+			"model": "manyshields:item/netherite_shield_blocking"
 		}
 	]
 }

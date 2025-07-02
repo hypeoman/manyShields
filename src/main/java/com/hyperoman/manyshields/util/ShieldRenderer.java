@@ -7,39 +7,53 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.model.ShieldModel;
+import net.minecraft.client.model.SkullModelBase;
+import net.minecraft.client.model.TridentModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.entity.Display;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = ManyShields.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ShieldRenderer extends BlockEntityWithoutLevelRenderer {
 
-    public static ShieldRenderer instance;
     private ShieldModel shieldModel;
+    private final EntityModelSet entityModelSet;
+
+    public static ShieldRenderer instance;
 
     public ShieldRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher, EntityModelSet entityModelSet) {
         super(blockEntityRenderDispatcher, entityModelSet);
+        this.entityModelSet = entityModelSet;
+    }
+
+    @Override
+    public void onResourceManagerReload(ResourceManager resourceManager) {
+        this.shieldModel = new ShieldModel(this.entityModelSet.bakeLayer(ModelLayers.SHIELD));
     }
 
     @SubscribeEvent
@@ -72,7 +86,7 @@ public class ShieldRenderer extends BlockEntityWithoutLevelRenderer {
         VertexConsumer $$28 = material.sprite().wrap(ItemRenderer.getFoilBufferDirect(multiBufferSource, this.shieldModel.renderType(material.atlasLocation()), true, stack.hasFoil()));
         this.shieldModel.handle().render(poseStack, $$28, light, overlay);
         if (flag) {
-            BannerRenderer.renderPatterns(poseStack, multiBufferSource, light, overlay, this.shieldModel.plate(), material, false, (DyeColor) Objects.requireNonNullElse(dyecolor, DyeColor.WHITE), bannerpatternlayers, stack.hasFoil());
+            BannerRenderer.renderPatterns(poseStack, multiBufferSource, light, overlay, this.shieldModel.plate(), material, false, Objects.requireNonNullElse(dyecolor, DyeColor.WHITE), bannerpatternlayers, stack.hasFoil());
         } else {
             this.shieldModel.plate().render(poseStack, $$28, light, overlay);
         }

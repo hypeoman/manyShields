@@ -2,6 +2,8 @@ package com.hyperoman.manyshields;
 
 import com.hyperoman.manyshields.item.ModItems;
 import com.hyperoman.manyshields.util.ModRecipeSerializer;
+import net.minecraft.world.item.*;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
@@ -27,10 +29,28 @@ public class ManyShields {
         modEventBus.addListener(this::commonSetup);
         ModItems.register(modEventBus);
         ModRecipeSerializer.register(modEventBus);
+        modEventBus.addListener(this::onBuildCreativeTabContents);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
 
+    }
+
+    public void onBuildCreativeTabContents(BuildCreativeModeTabContentsEvent event){
+        if (event.getTabKey() == CreativeModeTabs.COMBAT){
+            CreativeModeTab.TabVisibility vis = CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS;
+
+            ItemStack vanillaShield = new ItemStack(Items.SHIELD);
+            ItemStack woodenShield = new ItemStack(ModItems.WOODEN_SHIELD.get());
+            ItemStack goldShield = new ItemStack(ModItems.GOLD_SHIELD.get());
+            ItemStack diamondShield = new ItemStack(ModItems.DIAMOND_SHIELD.get());
+            ItemStack netheriteShield = new ItemStack(ModItems.NETHERITE_SHIELD.get());
+
+            event.insertBefore(vanillaShield, woodenShield, vis);
+            event.insertAfter(vanillaShield, goldShield, vis);
+            event.insertAfter(goldShield, diamondShield, vis);
+            event.insertAfter(diamondShield, netheriteShield, vis);
+        }
     }
 
     @SubscribeEvent

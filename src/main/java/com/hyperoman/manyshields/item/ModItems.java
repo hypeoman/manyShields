@@ -2,13 +2,18 @@ package com.hyperoman.manyshields.item;
 
 import com.hyperoman.manyshields.Config;
 import com.hyperoman.manyshields.ManyShields;
+import com.hyperoman.manyshields.util.ShieldRenderer;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Consumer;
 
 public class ModItems extends Item.Properties{
 
@@ -36,6 +41,17 @@ public class ModItems extends Item.Properties{
                 public int getMaxDamage(ItemStack stack){
                     return Config.DIAMOND_SHIELD_DURABILITY.get();
                 }
+
+                @Override
+                public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+                    consumer.accept(new IClientItemExtensions() {
+
+                        @Override
+                        public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                            return ShieldRenderer.instance;
+                        }
+                    });
+                }
             });
 
     public static final DeferredItem<Item> GOLD_SHIELD = ITEMS.register("gold_shield",
@@ -43,6 +59,17 @@ public class ModItems extends Item.Properties{
                 @Override
                 public int getMaxDamage(ItemStack stack){
                     return Config.DIAMOND_SHIELD_DURABILITY.get();
+                }
+
+                @Override
+                public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+                    consumer.accept(new IClientItemExtensions() {
+
+                        @Override
+                        public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                            return ShieldRenderer.instance;
+                        }
+                    });
                 }
             });
 
@@ -52,6 +79,17 @@ public class ModItems extends Item.Properties{
                 public int getMaxDamage(ItemStack stack){
                     return Config.DIAMOND_SHIELD_DURABILITY.get();
                 }
+
+                @Override
+                public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+                    consumer.accept(new IClientItemExtensions() {
+
+                        @Override
+                        public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                            return ShieldRenderer.instance;
+                        }
+                    });
+                }
             });
 
     public static final DeferredItem<Item> NETHERITE_SHIELD = ITEMS.register("netherite_shield",
@@ -59,6 +97,17 @@ public class ModItems extends Item.Properties{
                 @Override
                 public int getMaxDamage(ItemStack stack){
                     return Config.DIAMOND_SHIELD_DURABILITY.get();
+                }
+
+                @Override
+                public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+                    consumer.accept(new IClientItemExtensions() {
+
+                        @Override
+                        public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                            return ShieldRenderer.instance;
+                        }
+                    });
                 }
             });
 

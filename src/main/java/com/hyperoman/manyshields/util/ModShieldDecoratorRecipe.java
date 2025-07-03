@@ -35,9 +35,10 @@ public class ModShieldDecoratorRecipe extends CustomRecipe {
                     itemstack1 = itemstack2;
                 } else {
                     if (
-//                                    !(itemstack2.is(ModItems.GOLD_SHIELD.get())) &&
-                            !(itemstack2.is(ModItems.DIAMOND_SHIELD.get())) // &&
-//                                    !(itemstack2.is(ModItems.NETHERITE_SHIELD.get())) &&
+                            !(itemstack2.is(ModItems.WOODEN_SHIELD.get())) &&
+                            !(itemstack2.is(ModItems.GOLD_SHIELD.get())) &&
+                            !(itemstack2.is(ModItems.DIAMOND_SHIELD.get())) &&
+                            !(itemstack2.is(ModItems.NETHERITE_SHIELD.get()))
                     ) {
                         return false;
                     }
@@ -69,10 +70,10 @@ public class ModShieldDecoratorRecipe extends CustomRecipe {
                 if (itemstack2.getItem() instanceof BannerItem) {
                     itemstack = itemstack2;
                 } else if (
-//                                (itemstack2.is(ModItems.GOLD_SHIELD.get())) ||
-                                (itemstack2.is(ModItems.DIAMOND_SHIELD.get())) // ||
-//                                (itemstack2.is(ModItems.NETHERITE_SHIELD.get())) ||
-//                                (itemstack2.is(ModItems.EMERALD_SHIELD.get())) ||
+                                (itemstack2.is(ModItems.WOODEN_SHIELD.get())) ||
+                                (itemstack2.is(ModItems.GOLD_SHIELD.get())) ||
+                                (itemstack2.is(ModItems.DIAMOND_SHIELD.get())) ||
+                                (itemstack2.is(ModItems.NETHERITE_SHIELD.get()))
                 ) {
                     itemstack1 = itemstack2.copy();
                 }

@@ -2,6 +2,14 @@
   "sources": [
     {
       "type": "single",
+      "resource": "manyshields:entity/wooden_shield_base"
+    },
+    {
+      "type": "single",
+      "resource": "manyshields:entity/wooden_shield_base_nopattern"
+    },
+    {
+      "type": "single",
       "resource": "manyshields:entity/gold_shield_base"
     },
     {

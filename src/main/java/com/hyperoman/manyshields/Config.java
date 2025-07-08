@@ -20,26 +20,18 @@ public class Config {
     public static final ModConfigSpec.ConfigValue<Integer> DIAMOND_SHIELD_DURABILITY;
 
     static {
-        DIAMOND_SHIELD_DURABILITY = BUILDER.comment("Durability of Diamond Shield. Default Durability is 512")
-                .define("diamondShieldDurability", 512);
+        WOODEN_SHIELD_DURABILITY = BUILDER.comment("Durability of Wooden Shield. Default Durability is 79")
+                .define("woodenShieldDurability", 79);
+                
+        GOLD_SHIELD_DURABILITY = BUILDER.comment("Durability of Gold Shield. Default Durability is 44")
+                .define("goldShieldDurability", 44);
+
+        DIAMOND_SHIELD_DURABILITY = BUILDER.comment("Durability of Diamond Shield. Default Durability is 2098")
+                .define("diamondShieldDurability", 2098);
+        
+        NETHERITE_SHIELD_DURABILITY = BUILDER.comment("Durability of Netherite Shield. Default Durability is 2731")
+                .define("netheriteShieldDurability", 2731);
     }
-
-    public static final ModConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER
-            .comment("Whether to log the dirt block on common setup")
-            .define("logDirtBlock", true);
-
-    public static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
-            .comment("A magic number")
-            .defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
-
-    public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
-            .comment("What you want the introduction message to be for the magic number")
-            .define("magicNumberIntroduction", "The magic number is... ");
-
-    // a list of strings that are treated as resource locations for items
-    public static final ModConfigSpec.ConfigValue<List<? extends String>> ITEM_STRINGS = BUILDER
-            .comment("A list of items to log on common setup.")
-            .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), () -> "", Config::validateItemName);
 
     static final ModConfigSpec SPEC = BUILDER.build();
 

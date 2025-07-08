@@ -17,7 +17,10 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
+    public static final ModConfigSpec.ConfigValue<Integer> WOODEN_SHIELD_DURABILITY;
+    public static final ModConfigSpec.ConfigValue<Integer> GOLD_SHIELD_DURABILITY;
     public static final ModConfigSpec.ConfigValue<Integer> DIAMOND_SHIELD_DURABILITY;
+    public static final ModConfigSpec.ConfigValue<Integer> NETHERITE_SHIELD_DURABILITY;
 
     static {
         WOODEN_SHIELD_DURABILITY = BUILDER.comment("Durability of Wooden Shield. Default Durability is 79")

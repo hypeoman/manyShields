@@ -36,10 +36,10 @@ public class ModItems extends Item.Properties{
 
     // Shields
     public static final DeferredItem<Item> WOODEN_SHIELD = ITEMS.register("wooden_shield",
-            () -> new ShieldItem(new ModItems().defaultDurability(196)){
+            () -> new ShieldItem(new ModItems().defaultDurability(79)){
                 @Override
                 public int getMaxDamage(ItemStack stack){
-                    return Config.DIAMOND_SHIELD_DURABILITY.get();
+                    return Config.WOODEN_SHIELD_DURABILITY.get();
                 }
 
                 @Override
@@ -55,10 +55,10 @@ public class ModItems extends Item.Properties{
             });
 
     public static final DeferredItem<Item> GOLD_SHIELD = ITEMS.register("gold_shield",
-            () -> new ShieldItem(new ModItems().defaultDurability(196)){
+            () -> new ShieldItem(new ModItems().defaultDurability(44)){
                 @Override
                 public int getMaxDamage(ItemStack stack){
-                    return Config.DIAMOND_SHIELD_DURABILITY.get();
+                    return Config.GOLD_SHIELD_DURABILITY.get();
                 }
 
                 @Override
@@ -74,7 +74,7 @@ public class ModItems extends Item.Properties{
             });
 
     public static final DeferredItem<Item> DIAMOND_SHIELD = ITEMS.register("diamond_shield",
-            () -> new ShieldItem(new ModItems().defaultDurability(196)){
+            () -> new ShieldItem(new ModItems().defaultDurability(2098)){
                 @Override
                 public int getMaxDamage(ItemStack stack){
                     return Config.DIAMOND_SHIELD_DURABILITY.get();
@@ -93,10 +93,10 @@ public class ModItems extends Item.Properties{
             });
 
     public static final DeferredItem<Item> NETHERITE_SHIELD = ITEMS.register("netherite_shield",
-            () -> new ShieldItem(new ModItems().defaultDurability(196)){
+            () -> new ShieldItem(new ModItems().defaultDurability(2731)){
                 @Override
                 public int getMaxDamage(ItemStack stack){
-                    return Config.DIAMOND_SHIELD_DURABILITY.get();
+                    return Config.NETHERITE_SHIELD_DURABILITY.get();
                 }
 
                 @Override
